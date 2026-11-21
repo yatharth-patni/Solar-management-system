@@ -30,13 +30,13 @@ export const App: React.FC = () => {
   };
 
   const handleInviteSuccess = (newAdmin: Partial<AdminUser>) => {
-    showToast(`Invitation successfully dispatched to ${newAdmin.email}`);
+    showToast(`Invitation dispatched to ${newAdmin.email}`);
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#17151A] flex flex-col font-body">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#17151A] flex flex-col font-body selection:bg-[#F0E6F5] selection:text-[#765087]">
       
-      {/* Fixed/Sticky Top Navigation Bar */}
+      {/* Antigravity Minimal Top Navigation Bar */}
       <Navbar
         onToggleMobileSidebar={() => setMobileSidebarOpen(prev => !prev)}
         onOpenInviteModal={() => setIsInviteModalOpen(true)}
@@ -44,7 +44,7 @@ export const App: React.FC = () => {
 
       <div className="flex-1 flex">
         
-        {/* Left Collapsible Sidebar (Desktop) + Slide-in Drawer (Mobile) */}
+        {/* Left Collapsible Sidebar */}
         <Sidebar
           isCollapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
@@ -54,16 +54,16 @@ export const App: React.FC = () => {
           onSelectPlatformItem={(item) => setActivePlatformSection(item)}
         />
 
-        {/* MAIN DASHBOARD CONTENT AREA */}
+        {/* MAIN DASHBOARD CONTENT AREA — Generous Whitespace & Clear Hierarchy */}
         <main 
-          className={`flex-1 transition-all duration-300 ease-in-out px-4 sm:px-6 lg:px-8 py-8 max-w-[1920px] w-full ${
-            sidebarCollapsed ? 'lg:pl-[96px]' : 'lg:pl-[284px]'
+          className={`flex-1 transition-all duration-300 ease-in-out px-6 sm:px-10 lg:px-16 py-8 max-w-[1920px] w-full ${
+            sidebarCollapsed ? 'lg:pl-[104px]' : 'lg:pl-[284px]'
           }`}
         >
-          {/* Welcome Header: Heading in bold display font, tagline in elegant script font */}
+          {/* Spacious Welcome Hero Section */}
           <WelcomeHeader onOpenInviteModal={() => setIsInviteModalOpen(true)} />
 
-          {/* KPI Statistics Cards: 4 cards in one row on desktop */}
+          {/* Open Telemetry KPI Grid (No Boxed Clutter) */}
           <KpiCards onCardClick={(id) => {
             if (id === 'admins') {
               const el = document.getElementById('admin-overview-section');
@@ -71,19 +71,19 @@ export const App: React.FC = () => {
             }
           }} />
 
-          {/* ADMIN OVERVIEW & PLATFORM ACTIVITY: Side by Side on Desktop */}
-          <div id="admin-overview-section" className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          {/* ADMIN OVERVIEW & PLATFORM ACTIVITY: Airy Side-by-Side Layout */}
+          <div id="admin-overview-section" className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start pb-16">
             
-            {/* Admin Overview Panel: 8 columns on large screens */}
-            <div className="xl:col-span-8">
+            {/* Admin Overview (8 cols) */}
+            <div className="lg:col-span-8">
               <AdminOverview 
                 onOpenInviteModal={() => setIsInviteModalOpen(true)}
                 onSelectAdmin={(admin) => setSelectedAdminForDetail(admin)}
               />
             </div>
 
-            {/* Platform Activity Panel: 4 columns on large screens */}
-            <div className="xl:col-span-4">
+            {/* Platform Activity Timeline (4 cols with delicate vertical partition) */}
+            <div className="lg:col-span-4 lg:border-l lg:border-[#E7E5E9]/60 lg:pl-10">
               <PlatformActivity 
                 onViewAllLogs={() => {
                   showToast('Activity Audit log exporter ready for backend compliance stream.');
@@ -93,14 +93,15 @@ export const App: React.FC = () => {
 
           </div>
 
-          {/* Subtle Enterprise Footer Note */}
-          <footer className="mt-12 pt-6 border-t border-[#E7E5E9] flex flex-col sm:flex-row items-center justify-between text-xs text-[#77727D] gap-2">
+          {/* Minimalist Understated Footer */}
+          <footer className="py-8 border-t border-[#E7E5E9]/60 flex flex-col sm:flex-row items-center justify-between text-xs text-[#77727D] gap-3">
             <div className="flex items-center space-x-2">
-              <span className="font-display font-semibold text-[#17151A]">SolarOS Enterprise SaaS</span>
-              <span>— Central Administration Layer</span>
+              <span className="font-display font-semibold text-[#17151A]">SolarOS</span>
+              <span className="text-[#E7E5E9]">•</span>
+              <span>Central Administration Plane</span>
             </div>
             <div>
-              <span>Multi-Tenant Architecture Phase 1 • ISO 27001 & SOC2 Type II Framework Compliant</span>
+              <span>Multi-Tenant Architecture Phase 1 • ISO 27001 Ready</span>
             </div>
           </footer>
         </main>
@@ -124,11 +125,11 @@ export const App: React.FC = () => {
         }}
       />
 
-      {/* Interactive Success Toast Feedback */}
+      {/* Dynamic Action Toast Feedback */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-2.5 px-4 py-3 rounded-xl bg-[#17151A] text-white shadow-dropdown text-xs font-medium animate-fade-in border border-[#E7E5E9]/20">
-          <div className="w-5 h-5 rounded-full bg-[#9662AD] flex items-center justify-center text-white flex-shrink-0">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-2.5 px-4 py-2.5 rounded-full bg-[#17151A] text-white shadow-card text-xs font-medium animate-fade-in">
+          <div className="w-4 h-4 rounded-full bg-[#9662AD] flex items-center justify-center text-white flex-shrink-0">
+            <CheckCircle2 className="w-3 h-3" />
           </div>
           <span>{toastMessage}</span>
           <button
@@ -136,7 +137,7 @@ export const App: React.FC = () => {
             onClick={() => setToastMessage(null)}
             className="ml-2 text-[#77727D] hover:text-white"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3 h-3" />
           </button>
         </div>
       )}
