@@ -126,7 +126,11 @@ export const PlatformActivity: React.FC<PlatformActivityProps> = ({ onViewAllLog
 
                     {/* Badge */}
                     {activity.badgeLabel && (
-                      <span className="text-[10px] font-medium bg-[#FFFFFF] text-[#765087] px-2 py-0.5 rounded-full border border-[#E7E5E9] flex-shrink-0">
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border flex-shrink-0 ${
+                        activity.type === 'admin_suspended' || activity.type === 'security_alert'
+                          ? 'bg-[#F6E9EA] text-[#B65F65] border-[#EBD5D7]'
+                          : 'bg-[#E8F1EA] text-[#527F65] border-[#D4E4D8]'
+                      }`}>
                         {activity.badgeLabel}
                       </span>
                     )}

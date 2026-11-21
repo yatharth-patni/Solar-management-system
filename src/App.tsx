@@ -127,7 +127,7 @@ export const App: React.FC = () => {
       {/* Interactive Success Toast Feedback */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-2.5 px-4 py-3 rounded-xl bg-[#17151A] text-white shadow-dropdown text-xs font-medium animate-fade-in border border-[#E7E5E9]/20">
-          <div className="w-5 h-5 rounded-full bg-[#9662AD] flex items-center justify-center text-white flex-shrink-0">
+          <div className="w-5 h-5 rounded-full bg-[#527F65] flex items-center justify-center text-white flex-shrink-0">
             <CheckCircle2 className="w-3.5 h-3.5" />
           </div>
           <span>{toastMessage}</span>

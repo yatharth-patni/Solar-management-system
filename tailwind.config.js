@@ -20,6 +20,15 @@ export default {
           secondary: '#77727D',
           muted: '#9E9AA3',
           darkHover: '#684577',
+        },
+        status: {
+          active: '#527F65',
+          activeBg: '#E8F1EA',
+          activeBorder: '#D4E4D8',
+          pending: '#B65F65',
+          pendingBg: '#F6E9EA',
+          pendingBorder: '#EBD5D7',
+          bellGreen: '#78A889',
         }
       },
       fontFamily: {

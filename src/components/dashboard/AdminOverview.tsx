@@ -153,18 +153,18 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
             onClick={() => setStatusFilter('Active')}
             className={`p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
               statusFilter === 'Active' 
-                ? 'bg-[#F0E6F5] border-[#9662AD]/40 shadow-subtle' 
-                : 'bg-[#F8F4FA] border-[#E7E5E9] hover:bg-[#F0E6F5]/50'
+                ? 'bg-[#E8F1EA] border-[#527F65] shadow-subtle ring-1 ring-[#527F65]' 
+                : 'bg-[#E8F1EA]/50 border-[#D4E4D8] hover:bg-[#E8F1EA]'
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#77727D]">Active Admins</span>
-              <UserCheck className="w-4 h-4 text-[#765087]" />
+              <span className="text-xs font-semibold text-[#527F65]">Active Admins</span>
+              <UserCheck className="w-4 h-4 text-[#527F65]" />
             </div>
             <div className="font-display font-extrabold text-2xl text-[#17151A] mt-1.5">
               {activeCount}
             </div>
-            <span className="text-[11px] text-[#765087] font-medium">Authorized & session active</span>
+            <span className="text-[11px] text-[#527F65] font-medium">Authorized & session active</span>
           </div>
 
           {/* Suspended Admins */}
@@ -172,18 +172,18 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
             onClick={() => setStatusFilter('Suspended')}
             className={`p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
               statusFilter === 'Suspended' 
-                ? 'bg-[#F0E6F5] border-[#9662AD]/40 shadow-subtle' 
-                : 'bg-[#F8F4FA] border-[#E7E5E9] hover:bg-[#F0E6F5]/50'
+                ? 'bg-[#F6E9EA] border-[#B65F65] shadow-subtle ring-1 ring-[#B65F65]' 
+                : 'bg-[#F6E9EA]/50 border-[#EBD5D7] hover:bg-[#F6E9EA]'
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#77727D]">Suspended</span>
-              <UserX className="w-4 h-4 text-[#17151A]" />
+              <span className="text-xs font-semibold text-[#B65F65]">Suspended</span>
+              <UserX className="w-4 h-4 text-[#B65F65]" />
             </div>
             <div className="font-display font-extrabold text-2xl text-[#17151A] mt-1.5">
               {suspendedCount}
             </div>
-            <span className="text-[11px] text-[#77727D] font-medium">Under compliance review</span>
+            <span className="text-[11px] text-[#B65F65] font-medium">Under compliance review</span>
           </div>
 
           {/* Pending Invitations */}
@@ -191,18 +191,18 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
             onClick={() => setStatusFilter('Pending')}
             className={`p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
               statusFilter === 'Pending' 
-                ? 'bg-[#F0E6F5] border-[#9662AD]/40 shadow-subtle' 
-                : 'bg-[#F8F4FA] border-[#E7E5E9] hover:bg-[#F0E6F5]/50'
+                ? 'bg-[#F6E9EA] border-[#B65F65] shadow-subtle ring-1 ring-[#B65F65]' 
+                : 'bg-[#F6E9EA]/50 border-[#EBD5D7] hover:bg-[#F6E9EA]'
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#77727D]">Pending Invitations</span>
-              <Clock className="w-4 h-4 text-[#77727D]" />
+              <span className="text-xs font-semibold text-[#B65F65]">Pending Invitations</span>
+              <Clock className="w-4 h-4 text-[#B65F65]" />
             </div>
             <div className="font-display font-extrabold text-2xl text-[#17151A] mt-1.5">
               {pendingCount}
             </div>
-            <span className="text-[11px] text-[#77727D] font-medium">Awaiting security signup</span>
+            <span className="text-[11px] text-[#B65F65] font-medium">Awaiting security signup</span>
           </div>
 
         </div>
@@ -234,20 +234,29 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
 
         {/* Status Filter Buttons */}
         <div className="flex items-center space-x-1.5 bg-[#F3F3F5] p-1 rounded-xl border border-[#E7E5E9] self-start sm:self-auto overflow-x-auto max-w-full">
-          {(['All', 'Active', 'Suspended', 'Pending'] as const).map((status) => (
-            <button
-              key={status}
-              type="button"
-              onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 whitespace-nowrap ${
-                statusFilter === status
-                  ? 'bg-white text-[#765087] shadow-subtle'
-                  : 'text-[#77727D] hover:text-[#17151A]'
-              }`}
-            >
-              {status}
-            </button>
-          ))}
+          {(['All', 'Active', 'Suspended', 'Pending'] as const).map((status) => {
+            const isSelected = statusFilter === status;
+            let activeClass = 'bg-white text-[#765087] shadow-subtle';
+            if (isSelected) {
+              if (status === 'Active') activeClass = 'bg-[#E8F1EA] text-[#527F65] border border-[#D4E4D8] shadow-subtle';
+              else if (status === 'Pending' || status === 'Suspended') activeClass = 'bg-[#F6E9EA] text-[#B65F65] border border-[#EBD5D7] shadow-subtle';
+              else activeClass = 'bg-white text-[#765087] shadow-subtle';
+            }
+            return (
+              <button
+                key={status}
+                type="button"
+                onClick={() => setStatusFilter(status)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 whitespace-nowrap ${
+                  isSelected
+                    ? activeClass
+                    : 'text-[#77727D] hover:text-[#17151A]'
+                }`}
+              >
+                {status}
+              </button>
+            );
+          })}
         </div>
 
       </div>
@@ -295,10 +304,8 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
                         <span 
                           className={`absolute bottom-0 right-0 w-2 h-2 rounded-full ring-1.5 ring-white ${
                             admin.status === 'Active' 
-                              ? 'bg-[#9662AD]' 
-                              : admin.status === 'Suspended'
-                              ? 'bg-[#17151A]'
-                              : 'bg-[#77727D]'
+                              ? 'bg-[#527F65]' 
+                              : 'bg-[#B65F65]'
                           }`}
                         />
                       </div>
@@ -327,23 +334,23 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({
                     </span>
                   </td>
 
-                  {/* Status Badge (Strict palette: lavender, charcoal, grey) */}
+                  {/* Status Badge */}
                   <td className="py-3 px-4">
                     {admin.status === 'Active' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#F0E6F5] text-[#765087] border border-[#E7E5E9]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#9662AD] mr-1.5" />
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F1EA] text-[#527F65] border border-[#D4E4D8]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#527F65] mr-1.5" />
                         Active
                       </span>
                     )}
                     {admin.status === 'Suspended' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#F3F3F5] text-[#17151A] border border-[#E7E5E9]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#17151A] mr-1.5" />
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#F6E9EA] text-[#B65F65] border border-[#EBD5D7]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B65F65] mr-1.5" />
                         Suspended
                       </span>
                     )}
                     {admin.status === 'Pending' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F8F4FA] text-[#77727D] border border-[#E7E5E9]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#77727D] mr-1.5" />
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#F6E9EA] text-[#B65F65] border border-[#EBD5D7]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B65F65] mr-1.5" />
                         Pending
                       </span>
                     )}

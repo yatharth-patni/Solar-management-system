@@ -44,13 +44,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { label: 'Platform Settings', icon: Settings, id: 'platform-settings' },
   ];
 
-  const businessModuleItems = [
-    { label: 'CRM & Sales', icon: Handshake, id: 'crm' },
-    { label: 'Inventory Management', icon: PackageCheck, id: 'inventory' },
-    { label: 'Project Management', icon: KanbanSquare, id: 'projects' },
-    { label: 'Installation Management', icon: Wrench, id: 'installation' },
-    { label: 'Warranty & Support', icon: HeartHandshake, id: 'support' },
-    { label: 'Finance & Analytics', icon: BarChart3, id: 'finance' },
+  const businessModuleItems: { label: string; icon: React.ElementType; id: string; status: 'Active' | 'Pending' }[] = [
+    { label: 'CRM & Sales', icon: Handshake, id: 'crm', status: 'Active' },
+    { label: 'Inventory Management', icon: PackageCheck, id: 'inventory', status: 'Pending' },
+    { label: 'Project Management', icon: KanbanSquare, id: 'projects', status: 'Active' },
+    { label: 'Installation Management', icon: Wrench, id: 'installation', status: 'Pending' },
+    { label: 'Warranty & Support', icon: HeartHandshake, id: 'support', status: 'Active' },
+    { label: 'Finance & Analytics', icon: BarChart3, id: 'finance', status: 'Pending' },
   ];
 
   const handleItemClick = (label: string) => {
@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Navigation Sections */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-4 space-y-6">
         
         {/* PLATFORM SECTION */}
         <div>
@@ -172,8 +172,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     )}
                   </div>
                   {!isCollapsed && (
-                    <span className="text-[9px] font-semibold text-[#765087] bg-[#F0E6F5] px-1.5 py-0.5 rounded tracking-tight border border-[#E7E5E9]/60 flex-shrink-0">
-                      Coming Soon
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border tracking-tight flex-shrink-0 ${
+                      item.status === 'Active'
+                        ? 'text-[#527F65] bg-[#E8F1EA] border-[#D4E4D8]'
+                        : 'text-[#B65F65] bg-[#F6E9EA] border-[#EBD5D7]'
+                    }`}>
+                      {item.status}
                     </span>
                   )}
                 </div>
@@ -182,7 +186,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               return isCollapsed ? (
                 <Tooltip 
                   key={item.id} 
-                  content={`${item.label} (Coming Soon)`} 
+                  content={`${item.label} (${item.status})`} 
                   position="right"
                 >
                   {buttonContent}

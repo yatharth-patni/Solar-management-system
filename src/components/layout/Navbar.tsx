@@ -36,9 +36,30 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [notifications, setNotifications] = useState<NotificationItem[]>(MOCK_NOTIFICATIONS);
 
   const modulesRef = useRef<HTMLDivElement>(null);
+  const modulesMenuRef = useRef<HTMLDivElement>(null);
+  const modulesListRef = useRef<HTMLDivElement>(null);
   const adminRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+
+  // Prevent background page from scrolling when scrolling inside the modules dropdown
+  useEffect(() => {
+    const el = modulesMenuRef.current;
+    if (!el || !modulesDropdownOpen) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (modulesListRef.current) {
+        modulesListRef.current.scrollTop += e.deltaY;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', handleWheel);
+    };
+  }, [modulesDropdownOpen]);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -161,25 +182,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
 
                 {modulesDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-84 bg-[#FFFFFF] rounded-xl border border-[#E7E5E9] shadow-dropdown p-2 z-50 animate-fade-in">
-                    <div className="px-3 py-2 border-b border-[#E7E5E9] mb-1.5 flex items-center justify-between">
-                      <span className="text-xs font-semibold text-[#17151A] uppercase tracking-wider">
+                  <div 
+                    ref={modulesMenuRef}
+                    className="absolute left-0 mt-2 w-[360px] sm:w-[380px] bg-[#FFFFFF] rounded-2xl border border-[#E7E5E9] shadow-dropdown p-2 z-50 animate-fade-in flex flex-col max-h-[calc(100vh-5.5rem)] sm:max-h-[380px] overscroll-contain"
+                  >
+                    <div className="px-3 py-2 border-b border-[#E7E5E9] mb-1.5 flex items-center justify-between flex-shrink-0 bg-white">
+                      <span className="text-xs font-semibold text-[#17151A] uppercase tracking-wider font-display">
                         Business Modules Architecture
                       </span>
-                      <span className="text-[10px] bg-[#F0E6F5] text-[#765087] font-semibold px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] bg-[#E8F1EA] text-[#527F65] border border-[#D4E4D8] font-semibold px-2 py-0.5 rounded-full">
                         Phase 1 Ready
                       </span>
                     </div>
-                    <div className="space-y-1">
+                    <div 
+                      ref={modulesListRef}
+                      className="overflow-y-auto overscroll-contain space-y-1 pr-1 flex-1"
+                    >
                       {businessModules.map((module) => {
                         const Icon = module.icon;
                         return (
                           <div
                             key={module.name}
-                            className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F8F4FA] transition-colors cursor-pointer group"
+                            className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F8F4FA] transition-colors cursor-pointer group"
                           >
                             <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 rounded-lg bg-[#F0E6F5] flex items-center justify-center text-[#765087] group-hover:bg-[#9662AD] group-hover:text-white transition-colors">
+                              <div className="w-8 h-8 rounded-lg bg-[#F0E6F5] flex items-center justify-center text-[#765087] group-hover:bg-[#9662AD] group-hover:text-white transition-colors flex-shrink-0">
                                 <Icon className="w-4 h-4" />
                               </div>
                               <div>
@@ -191,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 </p>
                               </div>
                             </div>
-                            <span className="ml-2 text-[10px] font-medium bg-[#F3F3F5] text-[#77727D] px-2 py-0.5 rounded border border-[#E7E5E9] whitespace-nowrap">
+                            <span className="ml-2 text-[10px] font-medium bg-[#F3F3F5] text-[#77727D] px-2 py-0.5 rounded border border-[#E7E5E9] whitespace-nowrap flex-shrink-0">
                               Coming Soon
                             </span>
                           </div>
@@ -299,7 +326,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Bell className="w-5 h-5 text-[#17151A]" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-[#765087] ring-2 ring-white" />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#78A889] ring-2 ring-white" />
                 )}
               </button>
 
@@ -309,7 +336,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <div className="flex items-center space-x-2">
                       <span className="text-sm font-semibold text-[#17151A]">Platform Alerts</span>
                       {unreadCount > 0 && (
-                        <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#F0E6F5] text-[#765087]">
+                        <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#E8F1EA] text-[#527F65] border border-[#D4E4D8]">
                           {unreadCount} new
                         </span>
                       )}
@@ -367,7 +394,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <div className="w-8 h-8 rounded-full bg-[#765087] text-white flex items-center justify-center font-display font-semibold text-xs tracking-wider shadow-subtle ring-2 ring-[#F0E6F5]">
                     AV
                   </div>
-                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#9662AD] ring-1.5 ring-white" />
+                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#527F65] ring-1.5 ring-white" />
                 </div>
                 <div className="hidden sm:flex flex-col text-left">
                   <span className="text-xs font-semibold text-[#17151A] leading-tight">

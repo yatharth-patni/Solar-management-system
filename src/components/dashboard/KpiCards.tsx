@@ -43,9 +43,13 @@ export const KpiCards: React.FC<KpiCardsProps> = ({ onCardClick }) => {
                   <Icon className="w-5 h-5" strokeWidth={1.9} />
                 </div>
                 {metric.trend && (
-                  <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-[#F8F4FA] border border-[#E7E5E9] text-[11px] font-semibold text-[#765087]">
+                  <div className={`flex items-center space-x-1 px-2 py-0.5 rounded-full border text-[11px] font-semibold ${
+                    metric.id === 'admins'
+                      ? 'bg-[#F6E9EA] text-[#B65F65] border-[#EBD5D7]'
+                      : 'bg-[#E8F1EA] text-[#527F65] border-[#D4E4D8]'
+                  }`}>
                     <span>{metric.trend}</span>
-                    <ArrowUpRight className="w-3 h-3 text-[#9662AD]" />
+                    <ArrowUpRight className="w-3 h-3" />
                   </div>
                 )}
               </div>

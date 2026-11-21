@@ -13,6 +13,13 @@
     --color-border-grey: #E7E5E9;
     --color-main-text: #17151A;
     --color-secondary-text: #77727D;
+    --color-status-active: #527F65;
+    --color-status-active-bg: #E8F1EA;
+    --color-status-active-border: #D4E4D8;
+    --color-status-pending: #B65F65;
+    --color-status-pending-bg: #F6E9EA;
+    --color-status-pending-border: #EBD5D7;
+    --color-status-bell-green: #78A889;
   }
 
   body {

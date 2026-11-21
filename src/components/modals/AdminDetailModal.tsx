@@ -48,17 +48,17 @@ export const AdminDetailModal: React.FC<AdminDetailModalProps> = ({
                   {admin.name}
                 </h2>
                 {admin.status === 'Active' && (
-                  <span className="text-[10px] bg-[#F0E6F5] text-[#765087] font-bold px-2 py-0.5 rounded-full border border-[#E7E5E9]">
+                  <span className="text-[10px] bg-[#E8F1EA] text-[#527F65] font-semibold px-2.5 py-0.5 rounded-full border border-[#D4E4D8]">
                     Active
                   </span>
                 )}
                 {admin.status === 'Suspended' && (
-                  <span className="text-[10px] bg-[#F3F3F5] text-[#17151A] font-bold px-2 py-0.5 rounded-full border border-[#E7E5E9]">
+                  <span className="text-[10px] bg-[#F6E9EA] text-[#B65F65] font-semibold px-2.5 py-0.5 rounded-full border border-[#EBD5D7]">
                     Suspended
                   </span>
                 )}
                 {admin.status === 'Pending' && (
-                  <span className="text-[10px] bg-[#F8F4FA] text-[#77727D] font-medium px-2 py-0.5 rounded-full border border-[#E7E5E9]">
+                  <span className="text-[10px] bg-[#F6E9EA] text-[#B65F65] font-semibold px-2.5 py-0.5 rounded-full border border-[#EBD5D7]">
                     Pending
                   </span>
                 )}
