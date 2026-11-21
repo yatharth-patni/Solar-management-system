@@ -7,10 +7,19 @@ import { AdminOverview } from './components/dashboard/AdminOverview';
 import { PlatformActivity } from './components/dashboard/PlatformActivity';
 import { InviteAdminModal } from './components/modals/InviteAdminModal';
 import { AdminDetailModal } from './components/modals/AdminDetailModal';
+import { LoginPage } from './components/auth/LoginPage';
 import { AdminUser } from './types';
 import { CheckCircle2, X } from 'lucide-react';
 
 export const App: React.FC = () => {
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [, setCurrentUser] = useState<{ name: string; email: string; role: string }>({
+    name: 'Alexander Vance',
+    email: 'alexander@solaros.io',
+    role: 'Super Administrator',
+  });
+
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [activePlatformSection, setActivePlatformSection] = useState('Overview');
@@ -33,6 +42,45 @@ export const App: React.FC = () => {
     showToast(`Invitation dispatched to ${newAdmin.email}`);
   };
 
+  const handleSignInSuccess = (user: { name: string; email: string; role: string }) => {
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+    showToast(`Welcome back, ${user.name}`);
+  };
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false);
+    showToast('Signed out of SolarOS workspace.');
+  };
+
+  // If not authenticated, render the dedicated SolarOS Authentication Page
+  if (!isAuthenticated) {
+    return (
+      <>
+        <LoginPage 
+          onSignInSuccess={handleSignInSuccess}
+          onPreviewDashboard={() => setIsAuthenticated(true)}
+        />
+        {toastMessage && (
+          <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-2.5 px-4 py-2.5 rounded-full bg-[#1D1B20] text-white shadow-card text-xs font-medium animate-fade-in border border-[#E9E8EC]/20">
+            <div className="w-4 h-4 rounded-full bg-[#8B659C] flex items-center justify-center text-white flex-shrink-0">
+              <CheckCircle2 className="w-3 h-3" />
+            </div>
+            <span>{toastMessage}</span>
+            <button
+              type="button"
+              onClick={() => setToastMessage(null)}
+              className="ml-2 text-[#77737D] hover:text-white"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // Once authenticated, render the Central Super Admin Dashboard
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#17151A] flex flex-col font-body selection:bg-[#F0E6F5] selection:text-[#765087]">
       
@@ -40,6 +88,7 @@ export const App: React.FC = () => {
       <Navbar
         onToggleMobileSidebar={() => setMobileSidebarOpen(prev => !prev)}
         onOpenInviteModal={() => setIsInviteModalOpen(true)}
+        onSignOut={handleSignOut}
       />
 
       <div className="flex-1 flex">
@@ -63,7 +112,7 @@ export const App: React.FC = () => {
           {/* Spacious Welcome Hero Section */}
           <WelcomeHeader onOpenInviteModal={() => setIsInviteModalOpen(true)} />
 
-          {/* Open Telemetry KPI Grid (No Boxed Clutter) */}
+          {/* Open Telemetry KPI Grid */}
           <KpiCards onCardClick={(id) => {
             if (id === 'admins') {
               const el = document.getElementById('admin-overview-section');

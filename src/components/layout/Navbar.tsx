@@ -23,11 +23,13 @@ import { NotificationItem } from '../../types';
 interface NavbarProps {
   onToggleMobileSidebar: () => void;
   onOpenInviteModal: () => void;
+  onSignOut?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onToggleMobileSidebar,
   onOpenInviteModal,
+  onSignOut,
 }) => {
   const [modulesDropdownOpen, setModulesDropdownOpen] = useState(false);
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
@@ -384,7 +386,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                         type="button"
                         onClick={() => {
                           setProfileDropdownOpen(false);
-                          alert('Session secure.');
+                          if (onSignOut) {
+                            onSignOut();
+                          }
                         }}
                         className="w-full flex items-center space-x-2.5 px-3 py-1.5 text-xs text-[#765087] hover:bg-[#F0E6F5] rounded-xl transition-colors text-left font-medium"
                       >
