@@ -15,19 +15,23 @@ import {
   Handshake,
   Wrench,
   HeartHandshake,
-  BarChart3
+  BarChart3,
+  CreditCard
 } from 'lucide-react';
 import { MOCK_NOTIFICATIONS } from '../../data/mockData';
 import { NotificationItem } from '../../types';
+import { NavigationSection } from '../../app/routes';
 
 interface NavbarProps {
   onToggleMobileSidebar: () => void;
   onOpenInviteModal: () => void;
+  onNavigate?: (section: NavigationSection) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onToggleMobileSidebar,
   onOpenInviteModal,
+  onNavigate,
 }) => {
   const [modulesDropdownOpen, setModulesDropdownOpen] = useState(false);
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
@@ -77,6 +81,15 @@ export const Navbar: React.FC<NavbarProps> = ({
     { name: 'Finance & Analytics', icon: BarChart3, desc: 'PPA billing, EPC revenue & ROI' },
   ];
 
+  const handleNav = (section: NavigationSection) => {
+    if (onNavigate) {
+      onNavigate(section);
+    }
+    setModulesDropdownOpen(false);
+    setAdminDropdownOpen(false);
+    setProfileDropdownOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#E7E5E9]/70 transition-all duration-200">
       <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12">
@@ -94,18 +107,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* Minimal Brand Wordmark */}
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg bg-[#F0E6F5] flex items-center justify-center text-[#765087] transition-transform duration-300 hover:rotate-12">
+            <div 
+              onClick={() => handleNav('overview')}
+              className="flex items-center space-x-3 cursor-pointer group"
+            >
+              <div className="w-8 h-8 rounded-lg bg-[#F0E6F5] flex items-center justify-center text-[#765087] transition-transform duration-300 group-hover:rotate-12">
                 <svg 
                   className="w-4 h-4" 
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
-                  strokeWidth="2.2" 
+                  strokeWidth="2.4"
                   strokeLinecap="round" 
                   strokeLinejoin="round"
                 >
-                  <circle cx="12" cy="12" r="4" fill="#9662AD" fillOpacity="0.25" />
+                  <circle cx="12" cy="12" r="4" />
                   <path d="M12 2v2" />
                   <path d="M12 20v2" />
                   <path d="m4.93 4.93 1.41 1.41" />
@@ -116,28 +132,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <path d="m19.07 4.93-1.41 1.41" />
                 </svg>
               </div>
-              <div className="flex items-baseline space-x-2">
-                <span className="font-display font-bold text-lg tracking-tight text-[#17151A]">
+              <div className="flex items-baseline space-x-1.5">
+                <span className="font-display font-extrabold text-lg tracking-tight text-[#17151A]">
                   Solar<span className="text-[#765087]">OS</span>
                 </span>
-                <span className="hidden sm:inline text-[11px] font-medium tracking-wide text-[#77727D]">
-                  Central
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#77727D] font-display">
+                  Super Admin
                 </span>
               </div>
             </div>
 
-            {/* Antigravity-Style Clean Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-6 pl-2">
-              {/* Dashboard Link (Active State) */}
-              <button
-                type="button"
-                className="relative text-xs font-semibold text-[#17151A] tracking-wide py-1.5 transition-colors group"
-              >
-                <span>Dashboard</span>
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#765087] rounded-full" />
-              </button>
-
-              {/* Platform Modules Dropdown */}
+            {/* Desktop Minimal Navbar Links */}
+            <nav className="hidden md:flex items-center space-x-5 pl-2">
+              {/* Modules Dropdown */}
               <div className="relative" ref={modulesRef}>
                 <button
                   type="button"
@@ -162,9 +169,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <span className="text-[10px] font-bold text-[#77727D] uppercase tracking-wider font-display">
                         Business Engines
                       </span>
-                      <span className="text-[10px] text-[#765087] font-medium bg-[#F0E6F5] px-2 py-0.5 rounded-full">
-                        Phase 1
-                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleNav('modules')}
+                        className="text-[10px] text-[#765087] font-semibold bg-[#F0E6F5] px-2 py-0.5 rounded-full hover:bg-[#765087] hover:text-white transition-colors"
+                      >
+                        Configure All
+                      </button>
                     </div>
                     <div className="space-y-0.5">
                       {businessModules.map((module) => {
@@ -172,6 +183,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         return (
                           <div
                             key={module.name}
+                            onClick={() => handleNav('modules')}
                             className="flex items-center justify-between p-2 rounded-xl hover:bg-[#F8F4FA] transition-colors cursor-pointer group"
                           >
                             <div className="flex items-center space-x-2.5">
@@ -187,8 +199,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 </p>
                               </div>
                             </div>
-                            <span className="text-[9px] font-medium text-[#77727D] ml-2">
-                              Soon
+                            <span className="text-[9px] font-medium text-[#765087] bg-[#F0E6F5] px-1.5 py-0.5 rounded">
+                              Manage
                             </span>
                           </div>
                         );
@@ -198,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
 
-              {/* Admin Management Dropdown */}
+              {/* Quick Admin Navigation Dropdown */}
               <div className="relative" ref={adminRef}>
                 <button
                   type="button"
@@ -213,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                   aria-expanded={adminDropdownOpen}
                 >
-                  <span>Admin Management</span>
+                  <span>Management Hub</span>
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${adminDropdownOpen ? 'rotate-180 text-[#765087]' : 'text-[#77727D]'}`} />
                 </button>
 
@@ -232,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setAdminDropdownOpen(false)}
+                      onClick={() => handleNav('companies')}
                       className="w-full flex items-center space-x-2.5 px-3 py-2 text-xs text-[#17151A] hover:bg-[#F8F4FA] rounded-xl transition-colors text-left"
                     >
                       <Building2 className="w-3.5 h-3.5 text-[#77727D]" />
@@ -240,7 +252,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setAdminDropdownOpen(false)}
+                      onClick={() => handleNav('roles')}
                       className="w-full flex items-center space-x-2.5 px-3 py-2 text-xs text-[#17151A] hover:bg-[#F8F4FA] rounded-xl transition-colors text-left"
                     >
                       <ShieldCheck className="w-3.5 h-3.5 text-[#77727D]" />
@@ -248,11 +260,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setAdminDropdownOpen(false)}
+                      onClick={() => handleNav('subscriptions')}
+                      className="w-full flex items-center space-x-2.5 px-3 py-2 text-xs text-[#17151A] hover:bg-[#F8F4FA] rounded-xl transition-colors text-left"
+                    >
+                      <CreditCard className="w-3.5 h-3.5 text-[#77727D]" />
+                      <span>Subscription & Plans</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleNav('activity')}
                       className="w-full flex items-center space-x-2.5 px-3 py-2 text-xs text-[#17151A] hover:bg-[#F8F4FA] rounded-xl transition-colors text-left"
                     >
                       <FileText className="w-3.5 h-3.5 text-[#77727D]" />
-                      <span>Security Audit Logs</span>
+                      <span>Platform Activity Logs</span>
                     </button>
                   </div>
                 )}
@@ -270,7 +290,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-[#17151A] text-white hover:bg-[#765087] transition-all duration-200"
             >
               <UserPlus className="w-3 h-3 text-white" />
-              <span>Invite</span>
+              <span>Invite Admin</span>
             </button>
 
             {/* Notification Bell */}
@@ -295,7 +315,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {notificationsOpen && (
                 <div className="absolute right-0 mt-3 w-80 sm:w-88 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E7E5E9] shadow-dropdown p-3 z-50 animate-fade-in">
                   <div className="flex items-center justify-between pb-2 border-b border-[#E7E5E9] mb-2 px-1">
-                    <span className="text-xs font-semibold text-[#17151A]">Alerts</span>
+                    <span className="text-xs font-semibold text-[#17151A]">Platform Alerts</span>
                     {unreadCount > 0 && (
                       <button
                         type="button"
@@ -360,31 +380,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="absolute right-0 mt-3 w-60 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E7E5E9] shadow-dropdown p-2 z-50 animate-fade-in">
                   <div className="px-3 py-2 border-b border-[#E7E5E9] mb-1">
                     <p className="text-xs font-bold text-[#17151A]">Alexander Vance</p>
-                    <p className="text-[10px] text-[#77727D]">alexander@solaros.io • Root</p>
+                    <p className="text-[10px] text-[#77727D]">alexander@solaros.io • Root Admin</p>
                   </div>
                   <div className="space-y-0.5">
                     <button
                       type="button"
-                      onClick={() => setProfileDropdownOpen(false)}
+                      onClick={() => handleNav('settings')}
                       className="w-full flex items-center space-x-2.5 px-3 py-1.5 text-xs text-[#17151A] hover:bg-[#F3F3F5] rounded-xl transition-colors text-left"
                     >
                       <Settings className="w-3.5 h-3.5 text-[#77727D]" />
-                      <span>Settings</span>
+                      <span>System Settings</span>
                     </button>
                     <button
                       type="button"
-                      onClick={() => setProfileDropdownOpen(false)}
+                      onClick={() => handleNav('activity')}
                       className="w-full flex items-center space-x-2.5 px-3 py-1.5 text-xs text-[#17151A] hover:bg-[#F3F3F5] rounded-xl transition-colors text-left"
                     >
                       <Lock className="w-3.5 h-3.5 text-[#77727D]" />
-                      <span>Security Tokens</span>
+                      <span>Security & Audit Stream</span>
                     </button>
                     <div className="pt-1 mt-1 border-t border-[#E7E5E9]">
                       <button
                         type="button"
                         onClick={() => {
                           setProfileDropdownOpen(false);
-                          alert('Session secure.');
+                          alert('Session secure. Root privilege session active.');
                         }}
                         className="w-full flex items-center space-x-2.5 px-3 py-1.5 text-xs text-[#765087] hover:bg-[#F0E6F5] rounded-xl transition-colors text-left font-medium"
                       >
