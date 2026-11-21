@@ -93,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="text-[11px] font-bold text-[#77727D] tracking-wider uppercase font-display">
                 Platform
               </span>
-              <span className="text-[10px] text-[#9662AD] font-semibold bg-[#F0E6F5] px-1.5 py-0.2 rounded">
+              <span className="text-[10px] text-[#9662AD] font-semibold bg-[#F0E6F5] px-1.5 py-0.5 rounded">
                 Admin
               </span>
             </div>
@@ -149,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="text-[11px] font-bold text-[#77727D] tracking-wider uppercase font-display">
                 Business Modules
               </span>
-              <span className="text-[10px] text-[#77727D] font-medium bg-white border border-[#E7E5E9] px-1.5 py-0.2 rounded">
+              <span className="text-[10px] text-[#77727D] font-medium bg-white border border-[#E7E5E9] px-1.5 py-0.5 rounded">
                 6 Total
               </span>
             </div>

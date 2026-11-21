@@ -161,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
 
                 {modulesDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-84 bg-[#FFFFFF] rounded-xl border border-[#E7E5E9] shadow-dropdown p-2 z-50 animate-fade-in">
+                  <div className="absolute left-0 mt-2 w-96 bg-[#FFFFFF] rounded-xl border border-[#E7E5E9] shadow-dropdown p-2 z-50 animate-fade-in">
                     <div className="px-3 py-2 border-b border-[#E7E5E9] mb-1.5 flex items-center justify-between">
                       <span className="text-xs font-semibold text-[#17151A] uppercase tracking-wider">
                         Business Modules Architecture
