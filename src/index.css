@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-purple: #9662AD;
+    --color-deep-purple: #765087;
+    --color-light-lavender: #F0E6F5;
+    --color-very-light-lavender: #F8F4FA;
+    --color-bg: #FFFFFF;
+    --color-light-grey: #F3F3F5;
+    --color-border-grey: #E7E5E9;
+    --color-main-text: #17151A;
+    --color-secondary-text: #77727D;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #17151A;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F4FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E7E5E9;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9662AD;
+}
+
+/* Smooth Focus Rings */
+*:focus-visible {
+  outline: 2px solid #9662AD;
+  outline-offset: 2px;
+}
+
+/* Restrained motion utilities */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Font classes */
+.font-display {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-script {
+  font-family: 'Caveat', 'Alex Brush', cursive;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+}
