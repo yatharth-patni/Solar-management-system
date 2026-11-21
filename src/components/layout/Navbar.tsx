@@ -23,11 +23,13 @@ import { NotificationItem } from '../../types';
 interface NavbarProps {
   onToggleMobileSidebar: () => void;
   onOpenInviteModal: () => void;
+  onSignOut?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onToggleMobileSidebar,
   onOpenInviteModal,
+  onSignOut,
 }) => {
   const [modulesDropdownOpen, setModulesDropdownOpen] = useState(false);
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
@@ -452,12 +454,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                         type="button"
                         onClick={() => {
                           setProfileDropdownOpen(false);
-                          alert('Super Admin session remains secure in preview sandbox.');
+                          if (onSignOut) {
+                            onSignOut();
+                          } else {
+                            alert('Super Admin session remains secure in preview sandbox.');
+                          }
                         }}
                         className="w-full flex items-center space-x-2.5 px-3 py-2 text-xs text-[#765087] hover:bg-[#F0E6F5] rounded-md transition-colors text-left font-medium"
                       >
                         <LogOut className="w-3.5 h-3.5 text-[#765087]" />
-                        <span>Sign Out (Session Locked)</span>
+                        <span>Sign Out</span>
                       </button>
                     </div>
                   </div>

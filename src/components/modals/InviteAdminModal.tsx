@@ -49,7 +49,6 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
 
     const finalCompany = company === 'OTHER' ? customCompany.trim() || 'Custom Solar Tenant' : company;
 
-    // Simulate API delay
     setTimeout(() => {
       setIsSubmitting(false);
       const initials = name
@@ -73,7 +72,6 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
         modulesGranted: selectedModules,
       });
 
-      // Reset
       setName('');
       setEmail('');
       onClose();
@@ -82,36 +80,31 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {/* Subtle Backdrop */}
       <div 
-        className="fixed inset-0 bg-[#17151A]/50 backdrop-blur-sm transition-opacity duration-200"
+        className="fixed inset-0 bg-[#17151A]/30 backdrop-blur-sm transition-opacity duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal Dialog */}
-      <div className="relative w-full max-w-lg bg-[#FFFFFF] rounded-2xl border border-[#E7E5E9] shadow-modal z-50 overflow-hidden animate-fade-in">
+      {/* Minimal Dialog Card */}
+      <div className="relative w-full max-w-lg bg-white rounded-3xl border border-[#E7E5E9] shadow-modal z-50 overflow-hidden animate-fade-in">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E7E5E9] bg-[#F8F4FA]">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#F0E6F5] text-[#765087] flex items-center justify-center">
-              <UserPlus className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="font-display font-bold text-base text-[#17151A]">
-                Invite New Administrator
-              </h2>
-              <p className="text-[11px] text-[#77727D]">
-                Grant platform tenant authority with cryptographic invitation token
-              </p>
-            </div>
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[#E7E5E9]/60">
+          <div>
+            <h2 className="font-display font-bold text-lg text-[#17151A]">
+              Invite Administrator
+            </h2>
+            <p className="text-xs text-[#77727D]">
+              Provision platform access and delegate tenant authority.
+            </p>
           </div>
           
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-[#77727D] hover:bg-[#E7E5E9]/50 hover:text-[#17151A] transition-colors"
+            className="p-1.5 rounded-full text-[#77727D] hover:bg-[#F3F3F5] hover:text-[#17151A] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -120,7 +113,7 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {errorMessage && (
-            <div className="p-2.5 rounded-lg bg-[#F0E6F5] border border-[#9662AD]/30 text-xs text-[#765087] font-medium">
+            <div className="p-2.5 rounded-xl bg-[#F0E6F5] border border-[#9662AD]/30 text-xs text-[#765087] font-medium">
               {errorMessage}
             </div>
           )}
@@ -136,7 +129,7 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
               placeholder="e.g. Liam Henderson"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl bg-[#F8F4FA] border border-[#E7E5E9] text-[#17151A] focus:outline-none focus:ring-2 focus:ring-[#9662AD] focus:bg-white"
+              className="w-full px-3.5 py-2 text-xs rounded-xl bg-[#F7F7F8] border border-transparent focus:border-[#765087] text-[#17151A] focus:outline-none focus:bg-white transition-all"
             />
           </div>
 
@@ -151,11 +144,11 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
               placeholder="e.g. l.henderson@solarenergy.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl bg-[#F8F4FA] border border-[#E7E5E9] text-[#17151A] focus:outline-none focus:ring-2 focus:ring-[#9662AD] focus:bg-white"
+              className="w-full px-3.5 py-2 text-xs rounded-xl bg-[#F7F7F8] border border-transparent focus:border-[#765087] text-[#17151A] focus:outline-none focus:bg-white transition-all"
             />
           </div>
 
-          {/* Tenant Organization */}
+          {/* Tenant Organization & Role */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-[#17151A] mb-1">
@@ -164,59 +157,57 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
               <select
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-[#F8F4FA] border border-[#E7E5E9] text-[#17151A] focus:outline-none focus:ring-2 focus:ring-[#9662AD] focus:bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-[#F7F7F8] border border-transparent focus:border-[#765087] text-[#17151A] focus:outline-none focus:bg-white"
               >
                 {TENANT_OPTIONS.map((tenant) => (
                   <option key={tenant} value={tenant}>
                     {tenant}
                   </option>
                 ))}
-                <option value="OTHER">+ Add New Tenant Company...</option>
+                <option value="OTHER">+ Add New Tenant...</option>
               </select>
             </div>
 
-            {/* Role */}
             <div>
               <label className="block text-xs font-semibold text-[#17151A] mb-1">
-                Assigned Role *
+                Role *
               </label>
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value as AdminRole)}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-[#F8F4FA] border border-[#E7E5E9] text-[#17151A] focus:outline-none focus:ring-2 focus:ring-[#9662AD] focus:bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl bg-[#F7F7F8] border border-transparent focus:border-[#765087] text-[#17151A] focus:outline-none focus:bg-white"
               >
                 <option value="Operations Lead">Operations Lead</option>
                 <option value="Tenant Owner">Tenant Owner</option>
                 <option value="Technical Director">Technical Director</option>
                 <option value="Billing Administrator">Billing Administrator</option>
                 <option value="Compliance Officer">Compliance Officer</option>
-                <option value="Super Admin">Super Admin (Central)</option>
+                <option value="Super Admin">Super Admin</option>
               </select>
             </div>
           </div>
 
-          {/* Custom Company input if selected OTHER */}
           {company === 'OTHER' && (
             <div>
               <label className="block text-xs font-semibold text-[#17151A] mb-1">
-                Enter New Tenant Name *
+                New Tenant Name *
               </label>
               <input
                 type="text"
                 placeholder="e.g. Vanguard Solar Renewables Ltd"
                 value={customCompany}
                 onChange={(e) => setCustomCompany(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-[#F8F4FA] border border-[#E7E5E9] text-[#17151A] focus:outline-none focus:ring-2 focus:ring-[#9662AD] focus:bg-white"
+                className="w-full px-3.5 py-2 text-xs rounded-xl bg-[#F7F7F8] border border-transparent focus:border-[#765087] text-[#17151A] focus:outline-none focus:bg-white"
               />
             </div>
           )}
 
           {/* Module Grants Selection */}
           <div>
-            <label className="block text-xs font-semibold text-[#17151A] mb-1.5">
-              Preliminary Module Entitlements
+            <label className="block text-xs font-semibold text-[#17151A] mb-2">
+              Module Permissions
             </label>
-            <div className="grid grid-cols-2 gap-2 bg-[#F8F4FA] p-3 rounded-xl border border-[#E7E5E9]">
+            <div className="grid grid-cols-2 gap-2 bg-[#F7F7F8] p-3 rounded-2xl">
               {BUSINESS_MODULES.map((mod) => {
                 const isChecked = selectedModules.includes(mod.key);
                 return (
@@ -225,12 +216,12 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
                     onClick={() => toggleModule(mod.key)}
                     className="flex items-center space-x-2 text-xs cursor-pointer select-none text-[#17151A]"
                   >
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                    <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors ${
                       isChecked 
                         ? 'bg-[#765087] border-[#765087] text-white' 
                         : 'border-[#E7E5E9] bg-white'
                     }`}>
-                      {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                      {isChecked && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                     </div>
                     <span className="truncate text-[11px]">{mod.name}</span>
                   </label>
@@ -240,25 +231,25 @@ export const InviteAdminModal: React.FC<InviteAdminModalProps> = ({
           </div>
 
           {/* Modal Actions */}
-          <div className="pt-3 border-t border-[#E7E5E9] flex items-center justify-end space-x-2">
+          <div className="pt-4 border-t border-[#E7E5E9]/60 flex items-center justify-end space-x-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#E7E5E9] text-[#77727D] hover:bg-[#F3F3F5] hover:text-[#17151A] transition-colors"
+              className="px-4 py-2 text-xs font-medium text-[#77727D] hover:text-[#17151A] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#9662AD] hover:bg-[#765087] text-white transition-all shadow-subtle flex items-center space-x-1.5 disabled:opacity-70"
+              className="px-5 py-2 text-xs font-semibold rounded-full bg-[#17151A] hover:bg-[#765087] text-white transition-all shadow-subtle flex items-center space-x-1.5 disabled:opacity-70"
             >
               {isSubmitting ? (
-                <span>Generating Invite...</span>
+                <span>Sending...</span>
               ) : (
                 <>
                   <UserPlus className="w-3.5 h-3.5 text-white" />
-                  <span>Send Admin Invitation</span>
+                  <span>Send Invitation</span>
                 </>
               )}
             </button>
