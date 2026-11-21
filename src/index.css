@@ -4,28 +4,22 @@
 
 @layer base {
   :root {
-    --color-purple: #9662AD;
-    --color-deep-purple: #765087;
-    --color-light-lavender: #F0E6F5;
-    --color-very-light-lavender: #F8F4FA;
-    --color-bg: #FFFFFF;
-    --color-light-grey: #F3F3F5;
-    --color-border-grey: #E7E5E9;
-    --color-main-text: #17151A;
-    --color-secondary-text: #77727D;
-    --color-status-active: #527F65;
-    --color-status-active-bg: #E8F1EA;
-    --color-status-active-border: #D4E4D8;
-    --color-status-pending: #B65F65;
-    --color-status-pending-bg: #F6E9EA;
-    --color-status-pending-border: #EBD5D7;
-    --color-status-bell-green: #78A889;
+    --color-purple: #80538F;
+    --color-secondary-purple: #A986B8;
+    --color-light-lavender: #F1EAF5;
+    --color-very-light-lavender: #F9F6FA;
+    --color-bg: #F7F6F8;
+    --color-white: #FFFFFF;
+    --color-light-grey: #F2F0F4;
+    --color-border-grey: #E8E5EA;
+    --color-main-text: #211D24;
+    --color-secondary-text: #6F6874;
   }
 
   body {
-    background-color: #FFFFFF;
-    color: #17151A;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #F7F6F8;
+    color: #211D24;
+    font-family: 'Google Sans Flex', 'Google Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -39,21 +33,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F4FA;
+  background: #F7F6F8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E7E5E9;
+  background: #E8E5EA;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9662AD;
+  background: #80538F;
 }
 
 /* Smooth Focus Rings */
 *:focus-visible {
-  outline: 2px solid #9662AD;
+  outline: 2px solid #80538F;
   outline-offset: 2px;
 }
 
@@ -80,12 +74,12 @@
 }
 
 .animate-fade-in {
-  animation: fadeIn 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Font classes */
 .font-display {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Google Sans Flex', 'Google Sans', sans-serif;
 }
 
 .font-script {
@@ -93,5 +87,5 @@
 }
 
 .font-body {
-  font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+  font-family: 'Google Sans Flex', 'Google Sans', sans-serif;
 }
